@@ -4,16 +4,16 @@ from core import utils as ut
 tree = ut.load_tree()
 st.logo("assets/logo.png", size="large", link="https://www.myclimate.org")
 st.set_page_config(
-        layout="wide",
-        page_title="Qwiki Quickly",
-        page_icon=":material/search:"
-    )
+    layout="wide",
+    page_title="Qwiki Quickly",
+    page_icon=":material/search:"
+)
 
 st.title('Qwiki Quickly')
 st.text_input("Search", help="Please enter at least 3 characters", width=300, key="query", icon=":material/search:")
 
 node_counter = st.empty()
-node_counter.info(" pages", icon="spinner")
+node_counter.info(" pages", icon="spinner", width=300)
 
 def render_tree(tree, parents=None, d=1):
     if not isinstance(tree, list):
@@ -22,7 +22,7 @@ def render_tree(tree, parents=None, d=1):
         if len(st.session_state.query) >= 3:
             tree = ut.filter_tree(tree, st.session_state.query) 
         parents = []
-        
+
     node_count = 0
     for node in tree:
         title = node["title"]
@@ -41,4 +41,4 @@ def render_tree(tree, parents=None, d=1):
     
 node_count = render_tree(tree)
 with node_counter:
-    st.info(f"{node_count} pages")
+    st.info(f"{node_count} pages", width=300)
