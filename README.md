@@ -12,7 +12,7 @@ A fast and intuitive search interface for browsing the myclimate Qwiki knowledge
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.12+
 - Streamlit
 
 ## Installation
@@ -83,11 +83,13 @@ qwiki-quickly/
 
 ## Data Format
 
-The application loads knowledge base data from `data/qwiki.json`, which contains:
-- **graph**: Mapping of page URLs to their child page URLs
-- **attr**: Page attributes including titles for each URL
+The application loads knowledge base data from `data/qwiki.json`, which is a flat dictionary where:
+- Each key is a page URL (string)
+- Each value is an object with at least:
+	- `title`: The page title (string)
+	- `children` (optional): List of child page URLs (strings)
 
-The utility functions convert this graph representation into a hierarchical tree structure for display.
+The utility functions convert this flat dictionary into a hierarchical tree structure for display.
 
 ## How It Works
 
@@ -124,8 +126,8 @@ The utility functions convert this graph representation into a hierarchical tree
 - Returns the converted tree structure
 
 **`convert_to_tree(data)`**
-- Converts graph format to tree structure
-- Takes data with "graph" and "attr" keys
+- Converts the flat dictionary format to a tree structure
+- Takes the loaded JSON dictionary as input
 - Returns hierarchical tree with expanded/collapsed states
 
 **`filter_tree(tree, q)`**
