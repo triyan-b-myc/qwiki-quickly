@@ -8,9 +8,7 @@ def load_tree():
         return convert_to_tree(data)
     
 
-def convert_to_tree(data):
-    graph:dict = data["graph"]
-    attrs:dict = data["attr"]
+def convert_to_tree(graph):
     root_url = next(iter(graph.keys()))
     visited = set()
 
@@ -20,16 +18,19 @@ def convert_to_tree(data):
         return locale.strcoll(a["title"], b["title"])
 
     def _convert_to_tree(url):
-        if url in visited:
-            return None
-        if attrs.get(url) is None:
+        if url in visited or url not in graph:
             return None
         visited.add(url)
-        children = list(filter(lambda n: n is not None, (_convert_to_tree(child) for child in graph.get(url, []))))
+        children = list(
+            filter(
+                lambda n: n is not None, 
+                (_convert_to_tree(child) for child in graph[url].get("children", []))
+            )
+        )
         children.sort(key=cmp_to_key(sort_cmp))
 
         return {
-            "title": attrs[url]["title"],
+            "title": graph[url]["title"],
             "url": url,
             "expanded": url == root_url,
             "children": children

@@ -1,6 +1,7 @@
 import streamlit as st
 from core import utils as ut
 
+print("---")
 tree = ut.load_tree()
 st.logo("assets/logo.png", size="large", link="https://www.myclimate.org")
 st.set_page_config(
@@ -30,13 +31,13 @@ def render_tree(tree, parents=None, d=1):
         has_children = len(node["children"]) > 0
         icon = ":material/folder:" if has_children else ":material/link:"
         path = parents + [node]
+        node_count += 1
         if has_children:
             with st.expander(title, expanded=node["expanded"], icon=icon, key=url):
                 st.caption(" -> ".join(f'[{n["title"]}]({n["url"]})' for n in path))
-                node_count += 1 + render_tree(node["children"], path, d+1)
+                node_count += render_tree(node["children"], path, d+1)
         else:
             st.markdown(f"{icon} [{title}]({url})")
-            node_count += 1
     return node_count
     
 node_count = render_tree(tree)

@@ -17,6 +17,8 @@ A fast and intuitive search interface for browsing the myclimate Qwiki knowledge
 
 ## Installation
 
+### Local Development
+
 1. Clone the repository:
 ```bash
 git clone <repository-url>
@@ -27,6 +29,26 @@ cd qwiki-quickly
 ```bash
 pip install streamlit
 ```
+
+### Docker
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd qwiki-quickly
+```
+
+2. Build the Docker image:
+```bash
+docker build -t qwiki-quickly .
+```
+
+3. Run the container:
+```bash
+docker run -p 8501:8501 qwiki-quickly
+```
+
+The application will be available at `http://localhost:8501`.
 
 ## Usage
 
